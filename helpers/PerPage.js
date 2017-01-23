@@ -7,6 +7,7 @@ const PerPage = ({ value, onChange }) => (
       type="text"
       defaultValue={value}
       onChange={e => onChange(e.target.value)}
+      
     />
   </div>
 );

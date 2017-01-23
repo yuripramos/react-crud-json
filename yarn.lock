@@ -216,6 +216,10 @@ autoprefixer@^6.3.1:
     postcss "^5.2.8"
     postcss-value-parser "^3.2.3"
 
+awesome-bootstrap-checkbox@^1.0.0-alpha.4:
+  version "1.0.0-alpha.4"
+  resolved "https://registry.yarnpkg.com/awesome-bootstrap-checkbox/-/awesome-bootstrap-checkbox-1.0.0-alpha.4.tgz#f2627e8a03efb73ca2c6a354af1553233ef6f4f5"
+
 aws-sign2@~0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/aws-sign2/-/aws-sign2-0.6.0.tgz#14342dd38dbcc94d0e5b87d763cd63612c0e794f"
@@ -3076,6 +3080,10 @@ react-bootstrap@^0.30.7:
     react-prop-types "^0.4.0"
     uncontrollable "^4.0.1"
     warning "^3.0.0"
+
+react-checkbox-list@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/react-checkbox-list/-/react-checkbox-list-0.0.2.tgz#8f4b26261f5bb468db25107eebbebc5d61224cc9"
 
 "react-dom@^0.14.0 || <15.4.0":
   version "15.3.2"

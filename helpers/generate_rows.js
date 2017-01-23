@@ -20,13 +20,13 @@ const generateRows = (amount, { definitions, properties }) => range(amount).map(
   () => generate({
     generators,
     fieldGenerators: {
-      id() {
+      placa() {
         return uuid.v4();
       },
       Id() {
         return uuid.v4();
       },
-      boss() {
+      modelo() {
         return {
           name: this.name()
         };
@@ -50,12 +50,12 @@ const generateRows = (amount, { definitions, properties }) => range(amount).map(
         return `${sample(first)}${sample(second)} ${sample(third)}`;
       },
       product() {
-        const names = ['Apple', 'Pear', 'Strawberry', 'Pineapple', 'Potato', 'Tomato'];
+        const modelo = ['Apple', 'Pear', 'Strawberry', 'Pineapple', 'Potato', 'Tomato'];
 
         return `${sample(adjectives)} ${sample(names)}`;
       },
       position() {
-        return sample(['Boss', 'Contractor', 'Client', '']);
+        return (['one', 'two', 'three']);
       },
       address() {
         const suffixes = ['street', 'road', ' Road', ' Street', 'ton', ' Village', ''];
@@ -63,10 +63,6 @@ const generateRows = (amount, { definitions, properties }) => range(amount).map(
 
         return `${sample(adjectives)}${sample(suffixes)} ${number}`;
       },
-      price: generators.number.bind(null, 0, 200),
-      stock: generators.number.bind(null, 0, 2000),
-      salary: generators.number.bind(null, 0, 10000),
-      age: generators.number.bind(null, 1, 100),
       active() {
         return sample([true, false]);
       }

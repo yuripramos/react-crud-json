@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { compose } from 'redux';
+import Header from "./layout/header";
 import {
   cloneDeep, findIndex, orderBy, keys, values, transforms
 } from 'lodash';
@@ -12,13 +13,16 @@ import * as resolve from 'table-resolver';
 import * as edit from 'react-edit';
 import uuid from 'uuid';
 
+
 import {
-  Paginator, PrimaryControls, paginate
+  Paginator, PrimaryControls, generateRows, paginate 
 } from '../helpers';
+
+
 
 const app = document.getElementById('app')
 
-const rows = [
+const predefinedRows = [
    { "combustivel" : "Flex",
   "imagem" : null,
   "marca" : "Volkswagem",
@@ -42,6 +46,14 @@ const rows = [
   }
   
 ];
+// var oldStorage = JSON.parse(localStorage.getItem('oldRows')) || [];
+// console.log(predefinedRows.length);
+// console.log(oldStorage[0].modelo);
+// if(oldStorage.length==3 && oldStorage[0].modelo == "Gol" && oldStorage[1].modelo == "Fox" && oldStorage[2].modelo =="Fusca"){
+//  var rows = predefinedRows;
+// }else{
+
+// }
 
 const schema = {
   type: 'object',
@@ -65,7 +77,7 @@ const schema = {
       type: 'integer'
     }
   },
-  required: ['combustivel', 'imagem', 'marca', 'modelo', 'placa']
+  required: ['combustivel', 'marca']
 };
 
 
@@ -74,7 +86,8 @@ class AllFeaturesTable extends React.Component {
     super(props);
 
     this.state = {
-      rows: rows, 
+      rows: predefinedRows,
+      schema:schema,
       searchColumn: 'all',
       query: {}, // search query
       sortingColumns: null, 
@@ -142,30 +155,31 @@ class AllFeaturesTable extends React.Component {
         this.setState({ columns });
       }
     });
+    //cleaning our app localStorage after 30000000 ms ~= 8h
+    // setTimeout(function(){ localStorage.clear(); console.log("localStorage Limpado =)") }, 30000000);
+
 
     return [
+        {
+        cell: {
+          formatters: [
+            (value, { rowData }) => (
+            <div className="checkbox abc-checkbox">
+				<input type="checkbox" value=""  id={rowData.id }onClick={() => this.onRemove(rowData.id)} ></input>
+    			<label htmlFor={rowData.id }></label>
+  			</div>
+            )
+          ]
+        },
+        visible: true
+      },
       {
         property: 'placa',
         header: {
           label: 'Placa',
           formatters: [
-            (name, extraParameters) => resize(
-              <div style={{ display: 'inline' }}>
-                <input
-                  type="checkbox"
-                  onClick={() => console.log('clicked')}
-                  style={{ width: '20px' }}
-                />
-                {sortableHeader(name, extraParameters)}
-              </div>,
-              extraParameters
-            )
-          ],
-          props: {
-            style: {
-              width: 200
-            }
-          }
+        sortableHeader
+          ]
         },
         cell: {
           transforms: [
@@ -175,7 +189,7 @@ class AllFeaturesTable extends React.Component {
             search.highlightCell
           ]
         },
-        footer: () => 'You could show sums etc. here in the customizable footer.',
+        footer: () => 'Aqui você pode mostrar a soma dos valores de uma coluna - opcional',
         visible: true
       },
       {
@@ -184,12 +198,7 @@ class AllFeaturesTable extends React.Component {
           label: 'Modelo',
           formatters: [
             (v, extra) => resize(sortableHeader(v, extra), extra)
-          ],
-          props: {
-            style: {
-              width: 100
-            }
-          }
+          ]
         },
         cell: {
           transforms: [
@@ -207,12 +216,7 @@ class AllFeaturesTable extends React.Component {
           label: 'Marca',
           formatters: [
             sortableHeader
-          ],
-          props: {
-            style: {
-              width: 100
-            }
-          }
+          ]
         },
         cell: {
           transforms: [
@@ -227,15 +231,10 @@ class AllFeaturesTable extends React.Component {
           label: 'Foto',
           formatters: [
             sortableHeader
-          ],
-          props: {
-            style: {
-              width: 100
-            }
-          }
+          ]
         },
         cell: {
-			transforms: [editable(edit.input())]
+      transforms: [editable(edit.input())]
         },
         visible: true
       },
@@ -245,53 +244,23 @@ class AllFeaturesTable extends React.Component {
           label: 'Combustivel',
           formatters: [
             sortableHeader
-          ],
-          props: {
-            style: {
-              width: 100
-            }
-          }
+          ]
         },
         cell: {
-			transforms: [editable(edit.input())]
+      transforms: [editable(edit.input())]
         },
         visible: true
       },
-            {
+      {
         property: 'valor',
         header: {
           label: 'Valor',
           formatters: [
             sortableHeader
-          ],
-          props: {
-            style: {
-              width: 100
-            }
-          }
+          ]
         },
         cell: {
           transforms: [editable(edit.input({ props: { type: 'number' } }))]
-        },
-        visible: true
-      },
-      {
-        props: {
-          style: {
-            width: 50
-          }
-        },
-        cell: {
-          formatters: [
-            (value, { rowData }) => (
-              <span
-                className="remove"
-                onClick={() => this.onRemove(rowData.id)} style={{ cursor: 'pointer' }}
-              >
-                &#10007;
-              </span>
-            )
-          ]
         },
         visible: true
       }
@@ -317,44 +286,48 @@ class AllFeaturesTable extends React.Component {
     )(rows);
 
     return (
-      <div>
-      	<button type="button" onClick={this.onAdd}>Novo Carro</button>
-        <PrimaryControls
-          className="controls"
-          perPage={pagination.perPage}
-          column={searchColumn}
-          query={query}
-          columns={cols}
-          rows={rows}
-          onPerPage={this.onPerPage}
-          onColumnChange={this.onColumnChange}
-          onSearch={this.onSearch}
-        />
+      <div className="container">
+        <Header/>
+        <div className="wrapper">
+          <div className="row control-bar">
+            <div className="col-lg-9 col-md-9 col-sm-9 col-xs-6">
+              <button type="button" onClick={this.onAdd} className="btn-success">Novo Carro</button>
+            </div>
 
-        <Table.Provider
-          className="pure-table pure-table-striped"
-          columns={cols}
-          style={{ overflowX: 'auto' }}
-        >
-          <Table.Header>
-            <search.Columns query={query} columns={cols} onChange={this.onSearch} />
-          </Table.Header>
+              <PrimaryControls
+                perPage={pagination.perPage}
+                column={searchColumn}
+                query={query}
+                columns={cols}
+                rows={rows}
+                onPerPage={this.onPerPage}
+                onColumnChange={this.onColumnChange}
+                onSearch={this.onSearch}
+              />
+        </div>
+          <Table.Provider
+            className="table table-hover"
+            columns={cols}
+            style={{ overflowX: 'auto' }}
+          >
+            <Table.Header />
 
-          <Table.Body onRow={this.onRow} rows={paginated.rows} rowKey="id" />
+            <Table.Body onRow={this.onRow} rows={paginated.rows} rowKey="id"/>
 
-          <CustomFooter columns={cols} rows={paginated.rows} />
-        </Table.Provider>
+          </Table.Provider>
 
-        <div className="controls">
-          <Paginator
-            pagination={pagination}
-            pages={paginated.amount}
-            onSelect={this.onSelect}
-          />
+          <div className="controls text-center">
+            <Paginator
+              pagination={pagination}
+              pages={paginated.amount}
+              onSelect={this.onSelect}
+            />
+          </div>
         </div>
       </div>
     );
   }
+
   onRow(row, { rowIndex }) {
     return {
       onClick: () => this.onRowSelected(row)
@@ -362,6 +335,7 @@ class AllFeaturesTable extends React.Component {
   }
   onRowSelected(row) {
     console.log('clicked row', row);
+
   }
   onColumnChange(searchColumn) {
     this.setState({
@@ -394,13 +368,19 @@ class AllFeaturesTable extends React.Component {
     });
   }
   onRemove(id) {
-    const rows = cloneDeep(this.state.rows);
-    const idx = findIndex(rows, { id });
+  	if (confirm('Você tem certeza que deseja deletar essa tupla?')) {
+		const rows = cloneDeep(this.state.rows);
+	    const idx = findIndex(rows, { id });
 
-    // this could go through flux etc.
-    rows.splice(idx, 1);
+	    rows.splice(idx, 1);
 
-    this.setState({ rows });
+	    this.setState({ rows });
+    } else {
+    // Do nothing!
+	}
+
+    // localStorage.setItem('oldRows', JSON.stringify(rows));
+
   }
   onAdd(e) {
     e.preventDefault();
@@ -409,10 +389,16 @@ class AllFeaturesTable extends React.Component {
 
     rows.unshift({
       id: uuid.v4(),
-      name: 'Digite o nome'
+      placa: 'Qual a placa do veiculo?',
+      modelo:'Digite o modelo',
+      marca:'Fabricante',
+      foto:'Se houver, insira a url da foto',
+      combustivel:'movido a?',
+      valor:'preco'
     });
 
     this.setState({ rows });
+    // localStorage.setItem('oldRows', JSON.stringify(rows));
   }
   onToggleColumn({ columnIndex }) {
     const columns = cloneDeep(this.state.columns);
@@ -425,18 +411,6 @@ class AllFeaturesTable extends React.Component {
 
     this.setState({ columns, query });
   }
-}
-
-const CustomFooter = ({ columns, rows }) => {
-  return (
-    <tfoot>
-      <tr>
-        {columns.map((column, i) =>
-          <td key={`footer-${i}`}>{column.footer ? column.footer(rows) : null}</td>
-        )}
-      </tr>
-    </tfoot>
-  );
 }
 
 function sortHeader(sortable, getSortingColumns) {

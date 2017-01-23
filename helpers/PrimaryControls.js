@@ -8,17 +8,24 @@ const PrimaryControls = ({
   ...props
 }) => (
   <div {...props}>
+    <div className="col-lg-3 col-md-3 col-sm-3 col-xs-6">
+        <div className="input-group main-search">
+          <search.Field
+            column={column}
+            query={query}
+            columns={columns}
+            rows={rows}
+            onChange={onSearch}
+            onColumnChange={onColumnChange}
+            className="form-control"
 
-    <div className="search-container">
-      <search.Field
-        column={column}
-        query={query}
-        columns={columns}
-        rows={rows}
-        onChange={onSearch}
-        onColumnChange={onColumnChange}
-      />
-    </div>
+          />
+          <span className="input-group-btn">
+            <button className="btn btn-default btn-search" type="button"><i className="fa fa-search" aria-hidden="true"></i></button>
+          </span>
+          
+        </div>
+      </div>
   </div>
 );
 PrimaryControls.propTypes = {
