@@ -158,7 +158,10 @@ div li:empty{
   vertical-align: bottom;
   border-bottom: 1px solid #ddd;
   background: #F8FAFC;
+  width: 150px;
+
 }
+
 .table > caption + thead > tr:first-child > th,
 .table > colgroup + thead > tr:first-child > th,
 .table > thead:first-child > tr:first-child > th,
@@ -224,4 +227,10 @@ table th[class*="col-"] {
 .table > tbody > tr.active > th,
 .table > tfoot > tr.active > th {
   background-color: #f5f5f5;
+}
+
+  .table > tbody > tr > td{
+  vertical-align: middle;
+  text-overflow: ellipsis;
+  width: 100px;
 }

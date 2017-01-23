@@ -235,6 +235,7 @@ class AllFeaturesTable extends React.Component {
         },
         cell: {
       transforms: [editable(edit.input())]
+
         },
         visible: true
       },
