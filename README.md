@@ -1,8 +1,8 @@
 # React-Crud-Conta-azul
 
-His use was done accordingly the requirements with a few reservations that will be explained in the roadmap.
+The use was done accordingly the requirements with a few reservations that will be explained in the roadmap.
 
-I took this opportunity to make and webapp with only react, without redux and jQuery
+I took this opportunity to make a webapp with only react, without redux and jQuery
 
 
 ## Installation
@@ -28,7 +28,7 @@ Release 0.0.2 - Enable localstorage with a timeout of 8h to save registered data
 
 Release 0.0.3 - Extract datas via an API
 
-Release 0.0.4 - Insert transitions and interactivity, general improvements in UIX.
+Release 0.0.4 - Insert transitions and interactivity, general improvements in UIX. Enable responsive.
 
 Release 0.0.5 - Add Mocha.js for tests.
 
