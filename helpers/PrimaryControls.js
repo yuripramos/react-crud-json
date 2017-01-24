@@ -18,6 +18,14 @@ const PrimaryControls = ({
             onChange={onSearch}
             onColumnChange={onColumnChange}
             className="form-control"
+            components={{
+              props: {
+                filter: {
+                  placeholder: 'Pesquisar'
+                },
+              }
+            }}
+
 
           />
           <span className="input-group-btn">
@@ -29,6 +37,7 @@ const PrimaryControls = ({
   </div>
 );
 PrimaryControls.propTypes = {
+
   perPage: React.PropTypes.number,
   columns: React.PropTypes.array,
   rows: React.PropTypes.array,

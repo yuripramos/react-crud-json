@@ -50647,7 +50647,14 @@
 	          rows: rows,
 	          onChange: onSearch,
 	          onColumnChange: onColumnChange,
-	          className: 'form-control'
+	          className: 'form-control',
+	          components: {
+	            props: {
+	              filter: {
+	                placeholder: 'Pesquisar'
+	              }
+	            }
+	          }
 
 	        }),
 	        _react2.default.createElement(
@@ -50664,6 +50671,7 @@
 	  );
 	};
 	PrimaryControls.propTypes = {
+
 	  perPage: _react2.default.PropTypes.number,
 	  columns: _react2.default.PropTypes.array,
 	  rows: _react2.default.PropTypes.array,

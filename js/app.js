@@ -231,6 +231,7 @@ class AllFeaturesTable extends React.Component {
           label: 'Foto',
           formatters: [
             sortableHeader
+            
           ]
         },
         cell: {
