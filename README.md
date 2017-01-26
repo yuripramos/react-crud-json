@@ -15,7 +15,7 @@ The installation of the development environment is up to npm and the dependencie
 
 
 
-## Use in production( continous deploy)
+## Use in production(continuous deploy)
 
 `http://58876a0ad6865d5c694f29fb.minister-chipmunk-88805.netlify.com`(Temporary Link before deploy in heroku, only at release 0.0.2)
 
