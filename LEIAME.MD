@@ -1,4 +1,4 @@
-# React-Crud-Conta-azul
+# React-Crud
 
 Esse Projeto foi concebido para um desafio proposto pela conta azul durante seu processo seletivo.
 

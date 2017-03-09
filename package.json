@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fangj/react-restful-table.git"
+    "url": "git+https://github.com/yuripramos/react-crud-json"
   },
   "keywords": [
     "react",

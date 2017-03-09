@@ -329,7 +329,14 @@ class AllFeaturesTable extends React.Component {
       </div>
     );
   }
+    handlePageClick = (data) => {
+    let selected = data.selected;
+    let offset = Math.ceil(selected * this.props.perPage);
 
+    this.setState({offset: offset}, () => {
+      this.loadCommentsFromServer();
+    });
+  };
   onRow(row, { rowIndex }) {
     return {
       onClick: () => this.onRowSelected(row)
